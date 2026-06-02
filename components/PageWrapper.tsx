@@ -24,7 +24,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
 
   const handleLoadingComplete = () => {
     setShowLoading(false);
-    sessionStorage.setItem('loadingShown', 'true');
+    // sessionStorage.setItem('loadingShown', 'true');
   };
 
   // Don't render until mounted to avoid hydration mismatch
@@ -36,7 +36,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
     <>
       {showLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
       <ThemeToggle />
-      {children}
+      {!showLoading && children}
     </>
   );
 }
