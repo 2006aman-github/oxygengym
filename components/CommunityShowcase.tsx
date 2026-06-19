@@ -58,8 +58,7 @@ const mediaItems: MediaItem[] = [
     type: 'image',
     title: 'Complete Facility Tour',
     description: 'AC cooled spacious gym with professional training stations',
-    thumbnail: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/three-ey93npzbtDQVrPGUtHocAFr07o1Wg2.webp',
-    color: 'from-green-500/30 to-green-500/10',
+    color: 'from-primary/30 to-primary/10',
   },
 ];
 

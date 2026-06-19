@@ -264,12 +264,12 @@ export default function Contact() {
   height="450" style={{border: 0}}
    loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
 
-  {/* Green overlay */}
-  <div className="absolute inset-0 bg-[#82DC36]/10 pointer-events-none" />
+  {/* Red overlay */}
+  <div className="absolute inset-0 bg-[#F84D33]/10 pointer-events-none" />
 
 
   {/* Location label */}
-  <div className="absolute bottom-6 left-6 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-3 rounded-xl border border-[#82DC36]/20">
+  <div className="absolute bottom-6 left-6 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-3 rounded-xl border border-[#F84D33]/20">
     <MapPin size={22} className="text-primary" />
     
     <div>

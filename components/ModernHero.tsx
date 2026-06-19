@@ -1,133 +1,86 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import Image from 'next/image';
 
 export default function ModernHero() {
+ const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Only fade out during the last 30% of the section's scroll
+  const opacity = useTransform(scrollYProgress, [0.7, 1], [1, 0]);
   return (
-    <section className="relative w-full min-h-screen bg-[#020202] overflow-hidden flex items-center justify-center pt-20 overflow-hidden bg-background">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary opacity-50" />
-      
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
-            {/* Brand identifier */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 w-fit"
-            >
-              <div className="w-2 h-2 rounded-full bg-primary" />
-              <span className="text-primary font-semibold text-sm">THE RIGHT PLACE FOR FITNESS</span>
+    // 'dark' class on a parent element will trigger the dark: variants
+   <section ref={containerRef} className="relative  w-full min-h-screen bg-white dark:bg-[#020202] flex items-center pt-20 overflow-hidden transition-colors duration-500">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12">
+        <motion.div style={{ 
+    opacity, 
+    willChange: "opacity" // Tells the browser to dedicate GPU power to this
+  }} className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        
+          
+          <div className="space-y-10">
+            {/* Brand Identifier */}
+            <motion.div className="flex items-center gap-4 text-[#F84D33]">
+              <div className="w-12 h-[1px] bg-[#F84D33]" />
+              <span className="text-[10px] tracking-[0.3em] uppercase font-bold text-zinc-400 dark:text-zinc-500">
+                The Right Place For Fitness
+              </span>
             </motion.div>
 
-            {/* Main heading */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight"
-            >
-              Build Your <span className="text-primary">Strength</span> Community
+            {/* Headline */}
+            <motion.h1 className="text-[clamp(3.5rem,7vw,6rem)] font-bold text-zinc-950 dark:text-white leading-[0.95] tracking-tight transition-colors">
+              Build Your<br />
+              <span className="text-[#F84D33]">Strength</span><br />
+              Community
             </motion.h1>
 
-            {/* Subheading */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-lg text-muted-foreground max-w-lg leading-relaxed"
-            >
-              Join a thriving community of fitness enthusiasts. Affordable membership, premium equipment, and an environment that celebrates your transformation.
+            <motion.p className="max-w-md text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed transition-colors">
+              Join a thriving community of fitness enthusiasts. Affordable 
+              membership, premium equipment, and an environment that 
+              celebrates your transformation.
             </motion.p>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-wrap gap-4 pt-4"
-            >
-              <motion.a
-              href="#pricing"
-              >
-
-              <button className="px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/40 transition-all duration-300 text-base">
+            {/* CTA Button */}
+            <button className="group relative px-10 py-4 bg-transparent border border-zinc-950/20 dark:border-white/20 hover:border-[#F84D33] transition-colors duration-500">
+              <span className="relative z-10 text-xs tracking-[0.2em] uppercase font-bold text-zinc-950 dark:text-white group-hover:text-white transition-colors duration-500">
                 View Membership
-              </button>
-              </motion.a>
-              
-            </motion.div>
+              </span>
+              <div className="absolute inset-0 bg-[#F84D33] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </button>
 
             {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-wrap gap-8 pt-0"
-            >
-              <div>
-                <div className="text-3xl font-bold text-primary">50+</div>
-                <p className="text-muted-foreground text-sm">Active Members</p>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary">12/7</div>
-                <p className="text-muted-foreground text-sm">Access Available</p>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary">₹1,300</div>
-                <p className="text-muted-foreground text-sm">Monthly Start</p>
-              </div>
-            </motion.div>
-          </motion.div>
+            <div className="flex gap-12 pt-10 border-t border-zinc-200 dark:border-white/10 transition-colors">
+              {[
+                { label: 'Active Members', val: '50+' },
+                { label: 'Access', val: '12/7' },
+                { label: 'Monthly Start', val: '₹1,300' }
+              ].map((stat, i) => (
+                <div key={i}>
+                  <div className="text-xl font-bold text-zinc-950 dark:text-white">{stat.val}</div>
+                  <div className="text-[10px] uppercase tracking-widest text-zinc-400 mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-         {/* Right side - Blended Hero Image */}
-<motion.div
-  initial={{ opacity: 0, x: 50 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  transition={{ duration: 1 }}
-  className="relative h-full w-full "
->
-  {/* Green ambient glow */}
-  {/* <div className="absolute inset-0 bg-[#82DC36]/20 blur-[120px] scale-125" /> */}
-
-  {/* Image */}
-  <Image
-    src="/images/two-aes.png"
-    alt="Greek aesthetic bodybuilder"
-    fill
-    priority
-    className="
-      object-contain
-      object-center
-     scale-110
-    
-    "
-  />
-
-
-</motion.div>
-        </div>
+          {/* Image */}
+          <div className="relative h-[600px] w-full">
+            <Image
+              src="/images/heroimagenew.png"
+              alt="Gym Aesthetics"
+              fill
+              priority
+              className="object-cover object-center grayscale-[0.2] hover:grayscale-0 transition-all duration-700 shadow-xl"
+            />
+          </div>
+              
+        </motion.div>
       </div>
-
-      {/* Scroll indicator
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-primary"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      </motion.div> */}
     </section>
   );
 }
